@@ -338,7 +338,35 @@ namespace ModbusLib
                 4);
         }
 
+        public void WriteInt64BE(Int64 value)
+        {
+            CheckImmutable();
+            ByteArrayHelpers.WriteInt64BE(
+                _proxy,
+                0,
+                value);
 
+            int count = sizeof(Int64);
+            WriteBytes(
+                _proxy,
+                0,
+                count);
+        }
+
+        public void WriteUInt64BE(UInt64 value)
+        {
+            CheckImmutable();
+            ByteArrayHelpers.WriteUInt64BE(
+                _proxy,
+                0,
+                value);
+
+            int count = sizeof(UInt64);
+            WriteBytes(
+                _proxy,
+                0,
+                count);
+        }
 
         /// <summary>
         /// Allocate the specified number of bytes in the underlying

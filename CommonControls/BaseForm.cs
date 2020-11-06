@@ -749,5 +749,10 @@ namespace Modbus.Common
 
             System.Diagnostics.Process.Start(url);
         }
+
+        private void dataTab1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

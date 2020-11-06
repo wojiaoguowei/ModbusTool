@@ -39,7 +39,8 @@
             this.btnWriteSingleCoil = new System.Windows.Forms.Button();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.btnConnect = new System.Windows.Forms.Button();
-            this.pollTimer = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.grpStart.SuspendLayout();
@@ -52,16 +53,38 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Location = new System.Drawing.Point(7, 718);
+            this.groupBox4.Location = new System.Drawing.Point(10, 994);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(6);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(6);
+            // 
+            // listBoxCommLog
+            // 
+            this.listBoxCommLog.Margin = new System.Windows.Forms.Padding(6);
+            this.listBoxCommLog.Size = new System.Drawing.Size(1268, 238);
+            // 
+            // textBoxSlaveID
+            // 
+            this.textBoxSlaveID.Margin = new System.Windows.Forms.Padding(6);
             // 
             // groupBox3
             // 
-            this.groupBox3.Size = new System.Drawing.Size(189, 110);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(6);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox3.Size = new System.Drawing.Size(284, 152);
             // 
             // radioButtonInteger
             // 
-            this.radioButtonInteger.Location = new System.Drawing.Point(86, 20);
-            this.radioButtonInteger.Size = new System.Drawing.Size(64, 21);
+            this.radioButtonInteger.Location = new System.Drawing.Point(129, 28);
+            this.radioButtonInteger.Margin = new System.Windows.Forms.Padding(6);
+            this.radioButtonInteger.Size = new System.Drawing.Size(96, 29);
+            // 
+            // buttonImport
+            // 
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
+            // 
+            // textBoxPort
+            // 
+            this.textBoxPort.Margin = new System.Windows.Forms.Padding(6);
             // 
             // label1
             // 
@@ -69,11 +92,17 @@
             // 
             // textBoxSlaveDelay
             // 
+            this.textBoxSlaveDelay.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxSlaveDelay.Visible = false;
+            // 
+            // txtIP
+            // 
+            this.txtIP.Margin = new System.Windows.Forms.Padding(6);
             // 
             // radioButtonReverseFloat
             // 
-            this.radioButtonReverseFloat.Location = new System.Drawing.Point(86, 40);
+            this.radioButtonReverseFloat.Location = new System.Drawing.Point(129, 55);
+            this.radioButtonReverseFloat.Margin = new System.Windows.Forms.Padding(6);
             // 
             // groupBoxFunctions
             // 
@@ -88,18 +117,21 @@
             this.groupBoxFunctions.Controls.Add(this.btnWriteSingleReg);
             this.groupBoxFunctions.Controls.Add(this.btnWriteSingleCoil);
             this.groupBoxFunctions.Enabled = false;
-            this.groupBoxFunctions.Location = new System.Drawing.Point(216, 144);
+            this.groupBoxFunctions.Location = new System.Drawing.Point(324, 199);
+            this.groupBoxFunctions.Margin = new System.Windows.Forms.Padding(4);
             this.groupBoxFunctions.Name = "groupBoxFunctions";
-            this.groupBoxFunctions.Size = new System.Drawing.Size(340, 128);
+            this.groupBoxFunctions.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBoxFunctions.Size = new System.Drawing.Size(510, 177);
             this.groupBoxFunctions.TabIndex = 35;
             this.groupBoxFunctions.TabStop = false;
             this.groupBoxFunctions.Text = "Functions";
             // 
             // txtPollDelay
             // 
-            this.txtPollDelay.Location = new System.Drawing.Point(56, 100);
+            this.txtPollDelay.Location = new System.Drawing.Point(84, 138);
+            this.txtPollDelay.Margin = new System.Windows.Forms.Padding(4);
             this.txtPollDelay.Name = "txtPollDelay";
-            this.txtPollDelay.Size = new System.Drawing.Size(52, 20);
+            this.txtPollDelay.Size = new System.Drawing.Size(76, 28);
             this.txtPollDelay.TabIndex = 25;
             this.txtPollDelay.Text = "2000";
             this.txtPollDelay.Leave += new System.EventHandler(this.txtPollDelay_Leave);
@@ -107,82 +139,92 @@
             // cbPoll
             // 
             this.cbPoll.AutoSize = true;
-            this.cbPoll.Location = new System.Drawing.Point(7, 102);
+            this.cbPoll.Location = new System.Drawing.Point(10, 141);
+            this.cbPoll.Margin = new System.Windows.Forms.Padding(4);
             this.cbPoll.Name = "cbPoll";
-            this.cbPoll.Size = new System.Drawing.Size(43, 17);
+            this.cbPoll.Size = new System.Drawing.Size(70, 22);
             this.cbPoll.TabIndex = 24;
             this.cbPoll.Text = "Poll";
             this.cbPoll.UseVisualStyleBackColor = true;
+            this.cbPoll.CheckedChanged += new System.EventHandler(this.cbPoll_CheckedChanged);
             this.cbPoll.CheckStateChanged += new System.EventHandler(this.cbPoll_CheckStateChanged);
             // 
             // btnReadCoils
             // 
-            this.btnReadCoils.Location = new System.Drawing.Point(6, 19);
+            this.btnReadCoils.Location = new System.Drawing.Point(9, 26);
+            this.btnReadCoils.Margin = new System.Windows.Forms.Padding(4);
             this.btnReadCoils.Name = "btnReadCoils";
-            this.btnReadCoils.Size = new System.Drawing.Size(78, 35);
+            this.btnReadCoils.Size = new System.Drawing.Size(117, 48);
             this.btnReadCoils.TabIndex = 11;
             this.btnReadCoils.Text = "Read coils";
             this.btnReadCoils.Click += new System.EventHandler(this.BtnReadCoilsClick);
             // 
             // btnReadDisInp
             // 
-            this.btnReadDisInp.Location = new System.Drawing.Point(6, 60);
+            this.btnReadDisInp.Location = new System.Drawing.Point(9, 83);
+            this.btnReadDisInp.Margin = new System.Windows.Forms.Padding(4);
             this.btnReadDisInp.Name = "btnReadDisInp";
-            this.btnReadDisInp.Size = new System.Drawing.Size(78, 35);
+            this.btnReadDisInp.Size = new System.Drawing.Size(117, 48);
             this.btnReadDisInp.TabIndex = 16;
             this.btnReadDisInp.Text = "Read discrete inputs";
             this.btnReadDisInp.Click += new System.EventHandler(this.BtnReadDisInpClick);
             // 
             // btnWriteMultipleReg
             // 
-            this.btnWriteMultipleReg.Location = new System.Drawing.Point(249, 60);
+            this.btnWriteMultipleReg.Location = new System.Drawing.Point(374, 83);
+            this.btnWriteMultipleReg.Margin = new System.Windows.Forms.Padding(4);
             this.btnWriteMultipleReg.Name = "btnWriteMultipleReg";
-            this.btnWriteMultipleReg.Size = new System.Drawing.Size(78, 35);
+            this.btnWriteMultipleReg.Size = new System.Drawing.Size(117, 48);
             this.btnWriteMultipleReg.TabIndex = 23;
             this.btnWriteMultipleReg.Text = "Write multiple register";
             this.btnWriteMultipleReg.Click += new System.EventHandler(this.BtnWriteMultipleRegClick);
             // 
             // btnReadHoldReg
             // 
-            this.btnReadHoldReg.Location = new System.Drawing.Point(87, 19);
+            this.btnReadHoldReg.Location = new System.Drawing.Point(130, 26);
+            this.btnReadHoldReg.Margin = new System.Windows.Forms.Padding(4);
             this.btnReadHoldReg.Name = "btnReadHoldReg";
-            this.btnReadHoldReg.Size = new System.Drawing.Size(78, 35);
+            this.btnReadHoldReg.Size = new System.Drawing.Size(117, 48);
             this.btnReadHoldReg.TabIndex = 17;
             this.btnReadHoldReg.Text = "Read holding register";
             this.btnReadHoldReg.Click += new System.EventHandler(this.BtnReadHoldRegClick);
             // 
             // btnWriteMultipleCoils
             // 
-            this.btnWriteMultipleCoils.Location = new System.Drawing.Point(249, 19);
+            this.btnWriteMultipleCoils.Location = new System.Drawing.Point(374, 26);
+            this.btnWriteMultipleCoils.Margin = new System.Windows.Forms.Padding(4);
             this.btnWriteMultipleCoils.Name = "btnWriteMultipleCoils";
-            this.btnWriteMultipleCoils.Size = new System.Drawing.Size(78, 35);
+            this.btnWriteMultipleCoils.Size = new System.Drawing.Size(117, 48);
             this.btnWriteMultipleCoils.TabIndex = 22;
             this.btnWriteMultipleCoils.Text = "Write multiple coils";
             this.btnWriteMultipleCoils.Click += new System.EventHandler(this.BtnWriteMultipleCoilsClick);
             // 
             // btnReadInpReg
             // 
-            this.btnReadInpReg.Location = new System.Drawing.Point(87, 60);
+            this.btnReadInpReg.Location = new System.Drawing.Point(130, 83);
+            this.btnReadInpReg.Margin = new System.Windows.Forms.Padding(4);
             this.btnReadInpReg.Name = "btnReadInpReg";
-            this.btnReadInpReg.Size = new System.Drawing.Size(78, 35);
+            this.btnReadInpReg.Size = new System.Drawing.Size(117, 48);
             this.btnReadInpReg.TabIndex = 18;
             this.btnReadInpReg.Text = "Read input register";
             this.btnReadInpReg.Click += new System.EventHandler(this.BtnReadInpRegClick);
             // 
             // btnWriteSingleReg
             // 
-            this.btnWriteSingleReg.Location = new System.Drawing.Point(168, 60);
+            this.btnWriteSingleReg.Location = new System.Drawing.Point(252, 83);
+            this.btnWriteSingleReg.Margin = new System.Windows.Forms.Padding(4);
             this.btnWriteSingleReg.Name = "btnWriteSingleReg";
-            this.btnWriteSingleReg.Size = new System.Drawing.Size(78, 35);
+            this.btnWriteSingleReg.Size = new System.Drawing.Size(117, 48);
             this.btnWriteSingleReg.TabIndex = 21;
             this.btnWriteSingleReg.Text = "Write single register";
             this.btnWriteSingleReg.Click += new System.EventHandler(this.BtnWriteSingleRegClick);
             // 
             // btnWriteSingleCoil
             // 
-            this.btnWriteSingleCoil.Location = new System.Drawing.Point(168, 19);
+            this.btnWriteSingleCoil.Location = new System.Drawing.Point(252, 26);
+            this.btnWriteSingleCoil.Margin = new System.Windows.Forms.Padding(4);
             this.btnWriteSingleCoil.Name = "btnWriteSingleCoil";
-            this.btnWriteSingleCoil.Size = new System.Drawing.Size(78, 35);
+            this.btnWriteSingleCoil.Size = new System.Drawing.Size(117, 48);
             this.btnWriteSingleCoil.TabIndex = 19;
             this.btnWriteSingleCoil.Text = "Write single coil";
             this.btnWriteSingleCoil.Click += new System.EventHandler(this.BtnWriteSingleCoilClick);
@@ -190,35 +232,37 @@
             // buttonDisconnect
             // 
             this.buttonDisconnect.Enabled = false;
-            this.buttonDisconnect.Location = new System.Drawing.Point(759, 47);
+            this.buttonDisconnect.Location = new System.Drawing.Point(1138, 65);
+            this.buttonDisconnect.Margin = new System.Windows.Forms.Padding(4);
             this.buttonDisconnect.Name = "buttonDisconnect";
-            this.buttonDisconnect.Size = new System.Drawing.Size(86, 28);
+            this.buttonDisconnect.Size = new System.Drawing.Size(129, 39);
             this.buttonDisconnect.TabIndex = 37;
             this.buttonDisconnect.Text = "Disconnect";
             this.buttonDisconnect.Click += new System.EventHandler(this.ButtonDisconnectClick);
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(759, 12);
+            this.btnConnect.Location = new System.Drawing.Point(1138, 17);
+            this.btnConnect.Margin = new System.Windows.Forms.Padding(4);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(86, 28);
+            this.btnConnect.Size = new System.Drawing.Size(129, 39);
             this.btnConnect.TabIndex = 36;
             this.btnConnect.Text = "Connect";
             this.btnConnect.Click += new System.EventHandler(this.BtnConnectClick);
             // 
-            // pollTimer
+            // timer1
             // 
-            this.pollTimer.Interval = 2000;
-            this.pollTimer.Tick += new System.EventHandler(this.pollTimer_Tick);
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // MasterForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(869, 917);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.ClientSize = new System.Drawing.Size(1304, 1270);
             this.Controls.Add(this.buttonDisconnect);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.groupBoxFunctions);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "MasterForm";
             this.ShowDataLength = true;
             this.Text = "Modbus Master";
@@ -265,5 +309,8 @@
         private System.Windows.Forms.TextBox txtPollDelay;
         private System.Windows.Forms.CheckBox cbPoll;
         private System.Windows.Forms.Timer pollTimer;
+        private System.Windows.Forms.Timer timer1;
+        private System.ComponentModel.IContainer components;
+        private System.Windows.Forms.Timer timer2;
     }
 }

@@ -67,6 +67,8 @@
     <Compile Include="Protocols\Modbus\Codecs\ModbusCodecForceMultipleCoils.cs" />
     <Compile Include="Protocols\Modbus\Codecs\ModbusCodecReadMultipleDiscretes.cs" />
     <Compile Include="Protocols\Modbus\Codecs\ModbusCodecReadMultipleRegisters.cs" />
+    <Compile Include="Protocols\Modbus\Codecs\ModbusCodecReboot.cs" />
+    <Compile Include="Protocols\Modbus\Codecs\ModbusCodecSetTime.cs" />
     <Compile Include="Protocols\Modbus\Codecs\ModbusCodecWriteMultipleRegisters.cs" />
     <Compile Include="Protocols\Modbus\Codecs\ModbusCodecWriteSingleDiscrete.cs" />
     <Compile Include="Protocols\Modbus\Codecs\ModbusCodecWriteSingleRegister.cs" />

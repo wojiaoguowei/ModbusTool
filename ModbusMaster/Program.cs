@@ -15,6 +15,9 @@ namespace ModbusMaster
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            long test = 1000;
+
+            int count = sizeof(UInt64);
             Application.Run(new MasterForm());
         }
     }

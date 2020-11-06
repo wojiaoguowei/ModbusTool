@@ -127,6 +127,7 @@ namespace ModbusMaster
         private void BtnReadCoilsClick(object sender, EventArgs e)
         {
             ExecuteReadCommand(ModbusCommand.FuncReadCoils);
+
         }
 
         private void BtnReadDisInpClick(object sender, EventArgs e)
@@ -226,7 +227,9 @@ namespace ModbusMaster
 
         private void BtnWriteSingleRegClick(object sender, EventArgs e)
         {
-            ExecuteWriteCommand(ModbusCommand.FuncWriteSingleRegister);
+            //ExecuteWriteCommand(ModbusCommand.FuncWriteSingleRegister);
+            ExecuteWriteCommand(ModbusCommand.FuncReboot);
+            //ExecuteWriteCommand(ModbusCommand.FuncSetTime);
         }
 
         private void BtnWriteMultipleCoilsClick(object sender, EventArgs e)
@@ -251,26 +254,40 @@ namespace ModbusMaster
             var textBox = (TextBox)sender;
             if (int.TryParse(textBox.Text, out var parsedMillisecs))
             {
-                pollTimer.Interval = parsedMillisecs;
+                timer1.Interval = parsedMillisecs;
             }
             else
             {
                 textBox.Text = "0";
                 cbPoll.Checked = false;
-                pollTimer.Enabled = false;
+                timer1.Enabled = false;
             }
 
         }
 
         private void cbPoll_CheckStateChanged(object sender, EventArgs e)
         {
-            pollTimer.Enabled = cbPoll.Checked;
+            /*pollTimer.Enabled = cbPoll.Checked;
 
             if (!pollTimer.Enabled)
                 _lastReadCommand = 0;
+            */
+
+            timer1.Enabled = cbPoll.Checked;
+
+            if(!timer1.Enabled)
+            {
+                _lastReadCommand = 0;
+            }
         }
 
         private void pollTimer_Tick(object sender, EventArgs e)
+        {
+            if (_lastReadCommand != 0)
+                ExecuteReadCommand(_lastReadCommand);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
         {
             if (_lastReadCommand != 0)
                 ExecuteReadCommand(_lastReadCommand);
@@ -280,5 +297,22 @@ namespace ModbusMaster
         {
 
         }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbPoll_CheckedChanged(object sender, EventArgs e)
+        {
+            timer1.Enabled = cbPoll.Checked;
+
+            if (!timer1.Enabled)
+            {
+                _lastReadCommand = 0;
+            }
+        }
+
+
     }
 }

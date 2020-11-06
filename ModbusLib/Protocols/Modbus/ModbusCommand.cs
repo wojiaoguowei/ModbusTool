@@ -58,6 +58,17 @@ namespace ModbusLib.Protocols
         public const byte FuncReadCustom = 104;
 
         /**
+         * shell工具自定义功能码
+         * reboot	功能码	66	　默认00	　0 byte	2 byte
+         * 设置时间	功能码+参数	67	　默认00	4 bytes	2 byte
+         *  更新固件	功能吗+参数	68	　默认00	128bytes	2 byte
+        **/
+        public const byte FuncReboot = 66;
+        public const byte FuncSetTime = 67;
+        public const byte FuncUpdateFirmware = 68;
+
+
+        /**
          * Exceptions
          **/
         public const byte ErrorIllegalFunction = 1;

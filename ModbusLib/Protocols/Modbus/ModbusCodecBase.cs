@@ -49,6 +49,12 @@ namespace ModbusLib.Protocols
             CommandCodecs[ModbusCommand.FuncForceMultipleCoils] = new ModbusCodecForceMultipleCoils();
 
             CommandCodecs[ModbusCommand.FuncReadCustom] = new ModbusCodecReadCustom();
+
+            //
+
+            //添加reboot
+            CommandCodecs[ModbusCommand.FuncReboot] = new ModbusCodecReboot();
+            //CommandCodecs[ModbusCommand.FuncSetTime] = new ModbusCodecSetTime();
         }
 
 

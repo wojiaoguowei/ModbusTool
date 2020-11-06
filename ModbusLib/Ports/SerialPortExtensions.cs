@@ -19,7 +19,8 @@ using ModbusLib.Protocols;
  */
 namespace ModbusLib
 {
-    public static class SerialPortExtensions
+    //TestSerialPortExtensions
+    public static class TestSerialPortExtensions
     {
         /// <summary>
         /// Return a concrete implementation of a serial port client
