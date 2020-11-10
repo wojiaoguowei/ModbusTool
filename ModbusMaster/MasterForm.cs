@@ -171,6 +171,38 @@ namespace ModbusMaster
             }
         }
 
+
+        private void ExecuteWriteCommandOpenFile(byte function, short subFunction, byte[] strFileName, long length)
+        {
+            try
+            {
+                ModbusCommand command = new ModbusCommand(function, subFunction)
+                {
+                    Offset = StartAddress,
+                    Count = DataLength,
+                    TransId = _transactionId++,
+                    Data = new ushort[DataLength],
+                    FileName = strFileName,
+                    FileLength = length
+                };
+
+                var result = _driver.ExecuteGeneric(_portClient, command);
+                AppendLog(result.Status == CommResponse.Ack
+                              ? String.Format("Write succeeded: Function code:{0}", function)
+                              : String.Format("Failed to execute Write: Error code:{0}", result.Status));
+
+                if(result.Status == CommResponse.Ack)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                AppendLog(ex.Message);
+            }
+
+        }
+
         private void ExecuteWriteCommand(byte function)
         {
             try
@@ -232,7 +264,6 @@ namespace ModbusMaster
             //ExecuteWriteCommand(ModbusCommand.FuncReboot);
             //ExecuteWriteCommand(ModbusCommand.FuncSetTime);
 
-
             /*send file*/
             OpenFileDialog dialog = new OpenFileDialog();
             if(dialog.ShowDialog() == DialogResult.OK)
@@ -244,7 +275,10 @@ namespace ModbusMaster
                 int point = fullPath.LastIndexOf('\\') + 1;
                 string filePath = fullPath.Substring(0, point);
                 string fileName = fullPath.Substring(point, fullPath.Length - point);
+                byte[] byteArray = System.Text.Encoding.Default.GetBytes(fileName);
 
+
+                ExecuteWriteCommandOpenFile(ModbusCommand.FuncFile, ModbusCommand.SubFuncFileWriteOpen, byteArray, length);
 
 
             }

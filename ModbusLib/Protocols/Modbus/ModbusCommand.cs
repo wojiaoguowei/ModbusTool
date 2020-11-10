@@ -67,6 +67,32 @@ namespace ModbusLib.Protocols
         public const byte FuncSetTime = 67;
         public const byte FuncUpdateFirmware = 68;
 
+        //文件读写
+        public const byte FuncFile = 65;
+        //open for read
+        public const short SubFuncFileReadOpen = 1;
+        //read done
+        public const short SubFuncFileReadDone = 2;
+        //open for write
+        public const short SubFuncFileWriteOpen = 3;
+        //write done
+        public const short SubFuncFileWriteDone = 4;
+        //force done
+        public const short SubFuncFileForceDone = 5;
+
+        /**
+        * Exceptions open for write file
+        **/
+        public const byte FuncErrorCode = 0xC1; 
+        public const byte FuncExecptionCodeFileOpened = 0x1;
+        public const byte FuncExecptionCodeFileunfinished = 0x2;
+
+
+        //file record
+        public const byte FuncFileRecordRead = 20;
+        public const byte FuncFileRecordWrite = 21;
+
+
 
         /**
          * Exceptions
@@ -83,9 +109,10 @@ namespace ModbusLib.Protocols
         public delegate void OutgoingData(byte[] data);
         public delegate void IncommingData(byte[] data, int len);
         
-        public ModbusCommand(byte fc)
+        public ModbusCommand(byte fc, short subFc = 0)
         {
             FunctionCode = fc;
+            SubFunctionCode = subFc;
         }
 
 
@@ -94,6 +121,15 @@ namespace ModbusLib.Protocols
         /// The function code of the command
         /// </summary>
         public readonly byte FunctionCode;
+
+        //子功能码 两字节
+        public readonly short SubFunctionCode;
+        //file name
+        public byte[] FileName = new byte[128];
+        public long FileLength;
+
+        public byte[] FileData = new byte[128];
+
 
         /// <summary>
         /// The transaction-id of the request (often is zero)
