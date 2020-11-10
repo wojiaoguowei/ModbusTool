@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Modbus.Common;
 using ModbusLib;
 using ModbusLib.Protocols;
+using System.IO;
 
 namespace ModbusMaster
 {
@@ -228,8 +229,25 @@ namespace ModbusMaster
         private void BtnWriteSingleRegClick(object sender, EventArgs e)
         {
             //ExecuteWriteCommand(ModbusCommand.FuncWriteSingleRegister);
-            ExecuteWriteCommand(ModbusCommand.FuncReboot);
+            //ExecuteWriteCommand(ModbusCommand.FuncReboot);
             //ExecuteWriteCommand(ModbusCommand.FuncSetTime);
+
+
+            /*send file*/
+            OpenFileDialog dialog = new OpenFileDialog();
+            if(dialog.ShowDialog() == DialogResult.OK)
+            {
+                String fullPath = dialog.FileName;
+
+                FileInfo f = new FileInfo(dialog.FileName);
+                long length = f.Length;
+                int point = fullPath.LastIndexOf('\\') + 1;
+                string filePath = fullPath.Substring(0, point);
+                string fileName = fullPath.Substring(point, fullPath.Length - point);
+
+
+
+            }
         }
 
         private void BtnWriteMultipleCoilsClick(object sender, EventArgs e)
