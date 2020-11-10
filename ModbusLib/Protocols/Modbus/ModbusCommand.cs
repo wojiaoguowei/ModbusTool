@@ -92,6 +92,8 @@ namespace ModbusLib.Protocols
         public const byte FuncFileRecordRead = 20;
         public const byte FuncFileRecordWrite = 21;
 
+        //一个发送最大数据
+        public const byte FileRecordDataLength = 128;
 
 
         /**
@@ -128,7 +130,9 @@ namespace ModbusLib.Protocols
         public byte[] FileName = new byte[128];
         public long FileLength;
 
-        public byte[] FileData = new byte[128];
+        public ushort FileNo;
+        public ushort RecordNo;
+        
 
 
         /// <summary>
@@ -156,6 +160,8 @@ namespace ModbusLib.Protocols
         /// using zero/non-zero as boolean criteria
         /// </remarks>
         public ushort[] Data { get; set; }
+
+        public byte[] FileData;
 
         /// <summary>
         /// If non-zero, indicates the exception raised by the server

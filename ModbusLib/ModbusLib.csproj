@@ -73,6 +73,7 @@
     <Compile Include="Protocols\Modbus\Codecs\ModbusCodecWriteMultipleRegisters.cs" />
     <Compile Include="Protocols\Modbus\Codecs\ModbusCodecWriteSingleDiscrete.cs" />
     <Compile Include="Protocols\Modbus\Codecs\ModbusCodecWriteSingleRegister.cs" />
+    <Compile Include="Protocols\Modbus\Codecs\ModbusCodeFileRecodWrite.cs" />
     <Compile Include="Protocols\Modbus\ModbusClient.cs" />
     <Compile Include="Protocols\Modbus\ModbusCodecBase.cs" />
     <Compile Include="Protocols\Modbus\Codecs\ModbusCodecReadCustom.cs" />

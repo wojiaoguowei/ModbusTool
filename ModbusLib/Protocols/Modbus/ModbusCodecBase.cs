@@ -59,6 +59,9 @@ namespace ModbusLib.Protocols
 
             //open file
             CommandCodecs[ModbusCommand.FuncFile] = new ModbusCodecFileWrite();
+
+            //file record write 0x15
+            CommandCodecs[ModbusCommand.FuncFileRecordWrite] = new ModbusCodeFileRecodWrite();
         }
 
 
