@@ -407,11 +407,11 @@ namespace ModbusMaster
                                     //错误
                                 }
                                 statisticsLength += fileByteArray.Length;
-                                if (statisticsLength + ModbusCommand.FileRecordDataTransmitLength > /*20000*/ (260 * fileNo))
+                                if (statisticsLength + ModbusCommand.FileRecordDataTransmitLength > /*20000*/ (ModbusCommand.FileRecordMaxRecordBytes * fileNo))
                                 {
                                     //fileNo++;
                                     //recordNo = 0;
-                                    readLength = 260 * fileNo - statisticsLength;
+                                    readLength = ModbusCommand.FileRecordMaxRecordBytes * fileNo - statisticsLength;
                                 }
                                 fs.Seek(statisticsLength, SeekOrigin.Begin);
                                 个数 = fs.Read(fileByteArray, 0, readLength);
