@@ -87,14 +87,17 @@ namespace ModbusLib.Protocols
         public const byte FuncExecptionCodeFileOpened = 0x1;
         public const byte FuncExecptionCodeFileunfinished = 0x2;
 
+        public const byte ExceptCodeFileWriteDone = 0x03;
+
 
         //file record
         public const byte FuncFileRecordRead = 20;
         public const byte FuncFileRecordWrite = 21;
 
         //一个发送最大数据
-        public const byte FileRecordDataLength = 128;
-
+        public const byte FileRecordDataTransmitLength = 128;
+        //一个file record文件最大20000字节
+        public const int FileRecordMaxRecordBytes = 20000;
 
         /**
          * Exceptions

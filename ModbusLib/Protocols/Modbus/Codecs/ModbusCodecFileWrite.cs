@@ -30,8 +30,15 @@ namespace ModbusLib.Protocols
 
             }
             else if (command.SubFunctionCode == ModbusCommand.SubFuncFileWriteDone)
-            { 
-                //file read done
+            {
+                //file write done
+                body.WriteInt16BE(command.SubFunctionCode);
+                byte[] byteArray = command.FileName;
+                int size = byteArray.Length;
+                body.WriteBytes(byteArray);
+
+                byte[] tmpArray = new byte[128 - size];
+                body.WriteBytes(tmpArray);
             }
             
         }
@@ -44,14 +51,15 @@ namespace ModbusLib.Protocols
             //not used
             if(command.FunctionCode != ModbusCommand.FuncFile)
             {
-                byte exceptionCodeFunc = body.ReadByte();
-                if (exceptionCodeFunc == ModbusCommand.FuncExecptionCodeFileOpened)
+
+                if (command.FunctionCode == 0xC1)
                 {
-                    //文件已被打开
-                }
-                else if (exceptionCodeFunc == ModbusCommand.FuncExecptionCodeFileunfinished)
-                {
-                    //有未完成的文件操作
+                    byte exceptionCode = body.ReadByte();
+                    if (exceptionCode == ModbusCommand.ExceptCodeFileWriteDone)
+                    {
+                        //文件写完成回复异常
+                        
+                    }
                 }
             }
             

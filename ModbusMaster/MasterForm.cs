@@ -318,69 +318,146 @@ namespace ModbusMaster
                 byte[] byteArray = System.Text.Encoding.Default.GetBytes(fileName);
 
                 FileStream fs = new FileStream(filePath + fileName, FileMode.Open);
-              //  int 个数 = fs.Read(byteArray, 0, byteArray.Length);
-
-
+                //  int 个数 = fs.Read(byteArray, 0, byteArray.Length);
 
 
                 int result = ExecuteWriteCommandOpenFile(ModbusCommand.FuncFile, ModbusCommand.SubFuncFileWriteOpen, byteArray, length);
                 if(result == CommResponse.Ack)
                 {
-                    if (fs.Length <= 128)
+                    //if (fs.Length <= 128)
+                    //{
+                    //    //一次就可以发送文件
+                    //    byte[] fileByteArray = new byte[fs.Length]; 
+                    //    int 个数 = fs.Read(fileByteArray, 0, fileByteArray.Length);
+                    //    ushort fileNo = 0;
+                    //    ushort recordNo = 0;
+                    //    result = ExecuteFileRecordWriteCommand(ModbusCommand.FuncFileRecordWrite, fileByteArray, fileNo, recordNo);
+                    //    if(result != CommResponse.Ack)
+                    //    {
+                    //        //错误
+                    //    }
+                    //}
+                    //else if (fs.Length > 128 && fs.Length <= /*20000*/ 1000)
+                    //{
+                    //    //一个record file就可以发送文件
+                    //    //一次就可以发送文件
+                    //    byte[] fileByteArray = new byte[ModbusCommand.FileRecordDataLength];
+                    //    int 个数 = fs.Read(fileByteArray, 0, fileByteArray.Length);
+                    //    ushort fileNo = 0;
+                    //    ushort recordNo = 0;
+                    //    long statisticsLength = 0;
+                    //    while (fileByteArray.Length == 个数)
+                    //    {
+                    //        result = ExecuteFileRecordWriteCommand(ModbusCommand.FuncFileRecordWrite, fileByteArray, fileNo, recordNo);
+                    //        if (result != CommResponse.Ack)
+                    //        {
+                    //            //错误
+                    //        }
+                    //        statisticsLength += fileByteArray.Length;
+                    //        fs.Seek(statisticsLength, SeekOrigin.Begin);
+                    //        个数 = fs.Read(fileByteArray, 0, fileByteArray.Length);
+                    //        recordNo++;
+                    //    }
+
+                    //    if(个数 > 0)
+                    //    {
+                            
+                    //        byte[] byteArrayTmp = new byte[个数];
+                    //        Buffer.BlockCopy(fileByteArray, 0, byteArrayTmp, 0, 个数);
+                    //        result = ExecuteFileRecordWriteCommand(ModbusCommand.FuncFileRecordWrite, byteArrayTmp, fileNo, recordNo);
+                    //        if (result != CommResponse.Ack)
+                    //        {
+                    //            //错误
+                    //        }
+                    //        else
+                    //        {
+                    //            //写文件成功
+                    //            //向下位机发送写文件完成命令
+                    //            result = ExecuteWriteCommandOpenFile(ModbusCommand.FuncFile, ModbusCommand.SubFuncFileWriteDone, byteArray, length);
+                    //            if(result != CommResponse.Ack)
+                    //            {
+                    //                //错误
+                    //            }
+                    //            else
+                    //            {
+                    //                AppendLog("写文件成功!");
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                    if (fs.Length > /*20000*/ 128)
                     {
-                        //一次就可以发送文件
-                        byte[] fileByteArray = new byte[fs.Length];
-                        int 个数 = fs.Read(fileByteArray, 0, fileByteArray.Length);
+                        int statisticsLength = 0;
                         ushort fileNo = 0;
-                        ushort recordNo = 0;
-                        result = ExecuteFileRecordWriteCommand(ModbusCommand.FuncFileRecordWrite, fileByteArray, fileNo, recordNo);
-                        if(result != CommResponse.Ack)
+                        while (statisticsLength < fs.Length)
+                        {
+                            //一个record file就可以发送文件
+                            //一次就可以发送文件
+                            byte[] fileByteArray = new byte[ModbusCommand.FileRecordDataTransmitLength];
+                            int 个数 = fs.Read(fileByteArray, 0, fileByteArray.Length);
+                            fileNo++;
+                            ushort recordNo = 0;
+                            
+                            int readLength = ModbusCommand.FileRecordDataTransmitLength;
+                            while (fileByteArray.Length == 个数)
+                            {
+                                result = ExecuteFileRecordWriteCommand(ModbusCommand.FuncFileRecordWrite, fileByteArray, fileNo, recordNo);
+                                if (result != CommResponse.Ack)
+                                {
+                                    //错误
+                                }
+                                statisticsLength += fileByteArray.Length;
+                                if (statisticsLength + ModbusCommand.FileRecordDataTransmitLength > /*20000*/ (260 * fileNo))
+                                {
+                                    //fileNo++;
+                                    //recordNo = 0;
+                                    readLength = 260 * fileNo - statisticsLength;
+                                }
+                                fs.Seek(statisticsLength, SeekOrigin.Begin);
+                                个数 = fs.Read(fileByteArray, 0, readLength);
+                                recordNo++;
+                            }
+
+                            if (个数 > 0)
+                            {
+
+                                byte[] byteArrayTmp = new byte[个数];
+                                Buffer.BlockCopy(fileByteArray, 0, byteArrayTmp, 0, 个数);
+                                result = ExecuteFileRecordWriteCommand(ModbusCommand.FuncFileRecordWrite, byteArrayTmp, fileNo, recordNo);
+                                if (result != CommResponse.Ack)
+                                {
+                                    //错误
+                                }
+                                else
+                                {
+                                    statisticsLength += 个数;
+
+                                    
+                                }
+                            }
+                        }
+
+                        //写文件成功
+                        //向下位机发送写文件完成命令
+                        result = ExecuteWriteCommandOpenFile(ModbusCommand.FuncFile, ModbusCommand.SubFuncFileWriteDone, byteArray, length);
+                        if (result != CommResponse.Ack)
                         {
                             //错误
                         }
-                    }
-                    else if (fs.Length > 128 && fs.Length <= 20000)
-                    {
-                        //一个record file就可以发送文件
-                        //一次就可以发送文件
-                        byte[] fileByteArray = new byte[ModbusCommand.FileRecordDataLength];
-                        int 个数 = fs.Read(fileByteArray, 0, fileByteArray.Length);
-                        ushort fileNo = 0;
-                        ushort recordNo = 0;
-                        long statisticsLength = 0;
-                        while (fileByteArray.Length == 个数)
+                        else
                         {
-                            result = ExecuteFileRecordWriteCommand(ModbusCommand.FuncFileRecordWrite, fileByteArray, fileNo, recordNo);
-                            if (result != CommResponse.Ack)
-                            {
-                                //错误
-                            }
-                            statisticsLength += fileByteArray.Length;
-                            fs.Seek(statisticsLength, SeekOrigin.Begin);
-                            个数 = fs.Read(fileByteArray, 0, fileByteArray.Length);
-                            recordNo++;
+                            AppendLog("写文件成功!");
                         }
 
-                        if(个数 > 0)
-                        {
-                            
-                            byte[] byteArrayTmp = new byte[个数];
-                            Buffer.BlockCopy(fileByteArray, 0, byteArrayTmp, 0, 个数);
-                            result = ExecuteFileRecordWriteCommand(ModbusCommand.FuncFileRecordWrite, byteArrayTmp, fileNo, recordNo);
-                            if (result != CommResponse.Ack)
-                            {
-                                //错误
-                            }
-                        }
                     }
-                    else if (fs.Length > 20000)
-                    {
-                        //需要多个record file number
-                    }
+
+
+
                 }
 
-                
 
+                fs.Dispose();
+                fs.Close();
 
             }
         }
