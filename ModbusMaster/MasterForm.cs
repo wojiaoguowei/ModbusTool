@@ -327,12 +327,12 @@ namespace ModbusMaster
                     //if (fs.Length <= 128)
                     //{
                     //    //一次就可以发送文件
-                    //    byte[] fileByteArray = new byte[fs.Length]; 
+                    //    byte[] fileByteArray = new byte[fs.Length];
                     //    int 个数 = fs.Read(fileByteArray, 0, fileByteArray.Length);
                     //    ushort fileNo = 0;
                     //    ushort recordNo = 0;
                     //    result = ExecuteFileRecordWriteCommand(ModbusCommand.FuncFileRecordWrite, fileByteArray, fileNo, recordNo);
-                    //    if(result != CommResponse.Ack)
+                    //    if (result != CommResponse.Ack)
                     //    {
                     //        //错误
                     //    }
@@ -361,7 +361,7 @@ namespace ModbusMaster
 
                     //    if(个数 > 0)
                     //    {
-                            
+
                     //        byte[] byteArrayTmp = new byte[个数];
                     //        Buffer.BlockCopy(fileByteArray, 0, byteArrayTmp, 0, 个数);
                     //        result = ExecuteFileRecordWriteCommand(ModbusCommand.FuncFileRecordWrite, byteArrayTmp, fileNo, recordNo);
@@ -385,7 +385,7 @@ namespace ModbusMaster
                     //        }
                     //    }
                     //}
-                    if (fs.Length > /*20000*/ 128)
+                    //if (fs.Length > /*20000*/ 128)
                     {
                         int statisticsLength = 0;
                         ushort fileNo = 0;
